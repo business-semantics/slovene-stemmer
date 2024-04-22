@@ -1,6 +1,5 @@
 package es.grsm.elasticsearch.stemmer;
 
-import org.elasticsearch.common.util.set.Sets;
 import org.tartarus.snowball.Among;
 import org.tartarus.snowball.SnowballProgram;
 
@@ -10,9 +9,7 @@ import java.util.Set;
 
 public class SloveneStemmer2 extends SnowballProgram {
 
-    private static final Set<Character> CRKE = new HashSet<>(Arrays.asList('a','b','c','č','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','š','t','u','v','z','ž'));
-    private static final Set<Character> SAMOGLASNIKI = new HashSet<>(Arrays.asList('a','e','i','o','u'));
-    private static final Set<Character> SOGLASNIKI = Sets.difference(CRKE, SAMOGLASNIKI);
+    private static final Set<Character> CONSONANTS = new HashSet<>(Arrays.asList('b','c','č','d','f','g','h','j','k','l','m','n','p','r','s','š','t','v','z','ž'));
 
     private static final java.lang.invoke.MethodHandles.Lookup methodObject = java.lang.invoke.MethodHandles.lookup();
 
@@ -175,7 +172,7 @@ public class SloveneStemmer2 extends SnowballProgram {
         boolean r = false;
         if (iP1 > 6) {
             if (cursor != limit) {
-                r = SOGLASNIKI.contains(s.toCharArray()[cursor - 1]);
+                r = CONSONANTS.contains(s.toCharArray()[cursor - 1]);
             }
             if (r){
                 cursor -= 1;
@@ -183,7 +180,7 @@ public class SloveneStemmer2 extends SnowballProgram {
                 if (cursor == limit) {
                     r = false;
                 } else {
-                    r = SOGLASNIKI.contains(s.toCharArray()[cursor - 1]);
+                    r = CONSONANTS.contains(s.toCharArray()[cursor - 1]);
                 }
 
                 cursor = s.length() - var30;

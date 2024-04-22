@@ -1,7 +1,7 @@
 package es.grsm.elasticsearch.stemmer;
 
 import org.apache.lucene.analysis.util.StemmerUtil;
-import org.elasticsearch.common.util.set.Sets;
+
 import org.tartarus.snowball.SnowballProgram;
 
 import java.util.Arrays;
@@ -10,9 +10,7 @@ import java.util.Set;
 
 public class SloveneStemmer extends SnowballProgram {
 
-    private static final Set<Character> CRKE = new HashSet<>(Arrays.asList('a','b','c','č','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','š','t','u','v','z','ž'));
-    private static final Set<Character> SAMOGLASNIKI = new HashSet<>(Arrays.asList('a','e','i','o','u'));
-    private static final Set<Character> SOGLASNIKI = Sets.difference(CRKE, SAMOGLASNIKI);
+    private static final Set<Character> CONSONANTS = new HashSet<>(Arrays.asList('b','c','č','d','f','g','h','j','k','l','m','n','p','r','s','š','t','v','z','ž'));
 
     @Override
     public boolean stem() {
@@ -61,7 +59,7 @@ public class SloveneStemmer extends SnowballProgram {
     }
 
     private boolean checkSoglasniki(char[] s, int len) {
-        return len > 6 && SOGLASNIKI.contains(s[len - 1]);
+        return len > 6 && CONSONANTS.contains(s[len - 1]);
     }
 
     private boolean greaterThan8(char[] s, int len) {
